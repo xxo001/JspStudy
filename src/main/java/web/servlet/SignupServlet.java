@@ -7,12 +7,36 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import web.dto.SignupReqDto;
+
+/*
+ * 데이터 요청 방법
+ * 
+ * 1. form sublimt 요청 (Get요청 -> params(파라미터), Post -> body, JSON) : Get요청은 사용하지 않음
+ * 2. AJAX 요청(동기, 비동기 요청 Get, Post, Put, Delete)
+ * 3) 주소창, href, replace() 요청
+ */
+
 @WebServlet("/signup")
 public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/views/signup.jsp").forward(request, response);
+		
 	}
-
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("회원가입 요청");
+		
+		SignupReqDto signupReqDto = SignupReqDto.builder()
+				.name(request.getParameter("name"))
+				.email(request.getParameter("email"))
+				.username(request.getParameter("username"))
+				.password(request.getParameter("password"))
+				.build();
+		
+	}
+		
 }
